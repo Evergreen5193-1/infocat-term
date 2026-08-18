@@ -1,11 +1,5 @@
 name: Build Windows installer
 
-# Builds the Infocat Terminal Windows .exe installer in the cloud.
-# node-pty compiles natively on the Windows runner, so you need no local toolchain.
-#
-# Runs on:
-#   - every push of a version tag like v0.1.0  -> also attaches the .exe to a GitHub Release
-#   - manual "Run workflow" button (Actions tab) -> uploads the .exe as a build artifact
 on:
   push:
     tags:
@@ -15,7 +9,6 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,7 +17,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Install dependencies
         run: npm install
@@ -32,7 +24,6 @@ jobs:
       - name: Build Windows installer
         run: npm run dist:win
         env:
-          # Skip electron-builder code signing (no certificate configured).
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
 
       - name: Upload installer artifact
