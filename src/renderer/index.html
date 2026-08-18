@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' data: file:; style-src 'self' 'unsafe-inline'; script-src 'self';" />
+  <title>Infocat Terminal</title>
+  <link rel="stylesheet" href="../../node_modules/@xterm/xterm/css/xterm.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Sidebar: saved sessions -->
+    <aside id="sidebar">
+      <div class="brand">
+        <img id="brand-logo" alt="Infocat" />
+        <div class="brand-text">
+          <div class="brand-name" id="brand-name">Infocat</div>
+          <div class="brand-tag" id="brand-tag">Terminal</div>
+        </div>
+      </div>
+
+      <div class="side-actions">
+        <button class="btn btn-brand" id="btn-new-ssh">+ New SSH</button>
+        <button class="btn" id="btn-new-local" title="Open a local shell tab">Local shell</button>
+      </div>
+
+      <div class="side-head">
+        <span>Saved sessions</span>
+        <button class="icon-btn" id="btn-add-session" title="Add saved session">+</button>
+      </div>
+      <div id="session-list" class="session-list"></div>
+
+      <div class="side-foot">
+        <span id="enc-status" class="enc-status"></span>
+      </div>
+    </aside>
+
+    <!-- Main: tabs + terminals -->
+    <main id="main">
+      <div id="tabbar" class="tabbar"></div>
+      <div id="panes" class="panes">
+        <div id="welcome" class="welcome">
+          <img id="welcome-logo" alt="" />
+          <h1 id="welcome-title">Infocat Terminal</h1>
+          <p id="welcome-tag" class="muted"></p>
+          <div class="welcome-actions">
+            <button class="btn btn-brand" id="welcome-ssh">Connect over SSH</button>
+            <button class="btn" id="welcome-local">Open local shell</button>
+          </div>
+          <p class="muted small">Tip: save a session in the sidebar to reconnect with one click.</p>
+        </div>
+      </div>
+    </main>
+
+    <!-- SFTP drawer -->
+    <aside id="sftp" class="sftp hidden">
+      <div class="sftp-head">
+        <span class="sftp-title">Files</span>
+        <div class="sftp-tools">
+          <button class="icon-btn" id="sftp-up" title="Up one level">↑</button>
+          <button class="icon-btn" id="sftp-refresh" title="Refresh">⟳</button>
+          <button class="icon-btn" id="sftp-mkdir" title="New folder">📁+</button>
+          <button class="icon-btn" id="sftp-upload" title="Upload">⬆</button>
+          <button class="icon-btn" id="sftp-close" title="Hide files">✕</button>
+        </div>
+      </div>
+      <div class="sftp-path" id="sftp-path"></div>
+      <div class="sftp-list" id="sftp-list"></div>
+    </aside>
+  </div>
+
+  <!-- Connection dialog -->
+  <div id="dialog-backdrop" class="backdrop hidden">
+    <div class="dialog">
+      <div class="dialog-head">
+        <span id="dialog-title">New SSH connection</span>
+        <button class="icon-btn" id="dialog-close">✕</button>
+      </div>
+      <div class="dialog-body">
+        <label>Label
+          <input id="f-label" type="text" placeholder="My server" />
+        </label>
+        <div class="row">
+          <label class="grow">Host
+            <input id="f-host" type="text" placeholder="example.com or 10.0.0.5" />
+          </label>
+          <label class="port">Port
+            <input id="f-port" type="number" value="22" />
+          </label>
+        </div>
+        <label>Username
+          <input id="f-user" type="text" placeholder="root" />
+        </label>
+        <label>Authentication
+          <select id="f-auth">
+            <option value="password">Password</option>
+            <option value="key">Private key</option>
+            <option value="agent">SSH agent</option>
+          </select>
+        </label>
+        <label id="wrap-pass">Password
+          <input id="f-pass" type="password" placeholder="••••••••" />
+        </label>
+        <div id="wrap-key" class="hidden">
+          <label>Private key file
+            <div class="row">
+              <input id="f-key" type="text" class="grow" placeholder="~/.ssh/id_ed25519" readonly />
+              <button class="btn" id="btn-browse-key">Browse…</button>
+            </div>
+          </label>
+          <label>Key passphrase (optional)
+            <input id="f-passphrase" type="password" placeholder="••••••••" />
+          </label>
+        </div>
+        <label>Startup command (optional)
+          <input id="f-startup" type="text" placeholder="e.g. cd /var/www && ll" />
+        </label>
+      </div>
+      <div class="dialog-foot">
+        <label class="chk"><input type="checkbox" id="f-save" /> Save this session</label>
+        <div class="spacer"></div>
+        <button class="btn" id="dialog-cancel">Cancel</button>
+        <button class="btn btn-brand" id="dialog-connect">Connect</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- xterm + addons (loaded from node_modules; UMD globals) -->
+  <script src="../../node_modules/@xterm/xterm/lib/xterm.js"></script>
+  <script src="../../node_modules/@xterm/addon-fit/lib/addon-fit.js"></script>
+  <script src="../../node_modules/@xterm/addon-web-links/lib/addon-web-links.js"></script>
+  <script src="renderer.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+{
+  "name": "infocat-term",
+  "version": "0.1.0",
+  "description": "Infocat Terminal — a MobaXterm-style SSH/SFTP client with tabbed sessions and a built-in local terminal.",
+  "main": "src/main.js",
+  "author": "Infocat",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "rebuild": "electron-rebuild -f -w node-pty",
+    "postinstall": "electron-rebuild -f -w node-pty || echo \"electron-rebuild skipped\"",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win",
+    "dist:mac": "electron-builder --mac",
+    "dist:linux": "electron-builder --linux"
+  },
+  "dependencies": {
+    "@xterm/addon-fit": "^0.10.0",
+    "@xterm/addon-web-links": "^0.11.0",
+    "@xterm/xterm": "^5.5.0",
+    "node-pty": "^1.0.0",
+    "ssh2": "^1.15.0"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "@electron/rebuild": "^3.6.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.infocat.terminal",
+    "productName": "Infocat Terminal",
+    "files": [
+      "src/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "src/branding"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "src/branding/app.ico",
+      "artifactName": "Infocat-Terminal-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Infocat Terminal",
+      "installerIcon": "src/branding/app.ico",
+      "uninstallerIcon": "src/branding/app.ico",
+      "installerHeaderIcon": "src/branding/app.ico",
+      "deleteAppDataOnUninstall": false
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "src/branding/logo.png",
+      "artifactName": "Infocat-Terminal-${version}.${ext}",
+      "category": "public.app-category.developer-tools"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "src/branding/logo.png",
+      "category": "Development"
+    }
+  }
+}

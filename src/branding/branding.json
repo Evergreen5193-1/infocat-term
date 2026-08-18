@@ -1,0 +1,51 @@
+{
+  "//": "==== INFOCAT BRANDING — EDIT THIS FILE TO REBRAND THE WHOLE APP ====",
+  "//1": "Colors pulled from the Infocat cat logo. Swap logo.png / logomark.png with new art to change the mark.",
+  "//2": "Nothing else in the codebase needs to change for a rebrand.",
+
+  "appName": "Infocat Terminal",
+  "shortName": "Infocat",
+  "tagline": "Secure sessions, all in one place",
+  "windowTitle": "Infocat Terminal",
+  "logo": "logomark.png",
+  "icon": "logo.png",
+
+  "colors": {
+    "brand": "#9368ff",
+    "brandHover": "#a985ff",
+    "brandDim": "#6a47d1",
+    "accent": "#f5e7ff",
+    "bg": "#0e0a1a",
+    "bgPanel": "#161028",
+    "bgElevated": "#1e1636",
+    "border": "#2e2447",
+    "text": "#ece8f5",
+    "textMuted": "#9a8fb5",
+    "danger": "#f0506e",
+    "success": "#43d39e"
+  },
+
+  "terminalTheme": {
+    "background": "#0b0713",
+    "foreground": "#ece8f5",
+    "cursor": "#a985ff",
+    "cursorAccent": "#0b0713",
+    "selectionBackground": "#3a2d63",
+    "black": "#1a1230",
+    "red": "#f0506e",
+    "green": "#43d39e",
+    "yellow": "#ffc851",
+    "blue": "#6f9dff",
+    "magenta": "#9368ff",
+    "cyan": "#5ce0d4",
+    "white": "#ece8f5",
+    "brightBlack": "#6a5f88",
+    "brightRed": "#ff738b",
+    "brightGreen": "#5fe3ac",
+    "brightYellow": "#ffd67a",
+    "brightBlue": "#93b6ff",
+    "brightMagenta": "#a985ff",
+    "brightCyan": "#7ef0e6",
+    "brightWhite": "#ffffff"
+  }
+}

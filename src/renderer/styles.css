@@ -1,0 +1,173 @@
+/* Colors are injected as CSS variables from branding.json at runtime (see renderer.js). */
+:root {
+  --brand: #9368ff;
+  --brand-hover: #a985ff;
+  --brand-dim: #6a47d1;
+  --accent: #f5e7ff;
+  --bg: #0e0a1a;
+  --bg-panel: #161028;
+  --bg-elevated: #1e1636;
+  --border: #2e2447;
+  --text: #ece8f5;
+  --text-muted: #9a8fb5;
+  --danger: #f0506e;
+  --success: #43d39e;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; height: 100%; overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, sans-serif;
+  background: var(--bg); color: var(--text);
+  font-size: 13px;
+}
+
+#app {
+  display: grid;
+  grid-template-columns: 240px 1fr auto;
+  height: 100vh;
+}
+
+/* ---------------- Sidebar ---------------- */
+#sidebar {
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  min-width: 0;
+}
+.brand {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 14px 10px;
+}
+.brand img { width: 38px; height: 38px; border-radius: 9px; }
+.brand-name { font-weight: 700; font-size: 15px; letter-spacing: .2px; }
+.brand-tag { color: var(--text-muted); font-size: 11px; }
+
+.side-actions { display: flex; gap: 8px; padding: 4px 12px 12px; }
+.side-actions .btn { flex: 1; }
+
+.side-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 14px; color: var(--text-muted);
+  font-size: 11px; text-transform: uppercase; letter-spacing: .6px;
+  border-top: 1px solid var(--border);
+}
+.session-list { flex: 1; overflow-y: auto; padding: 4px 8px; }
+.session-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 10px; border-radius: 8px; cursor: pointer;
+  border: 1px solid transparent;
+}
+.session-item:hover { background: var(--bg-elevated); border-color: var(--border); }
+.session-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand); flex: none; }
+.session-meta { min-width: 0; flex: 1; }
+.session-label { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.session-sub { color: var(--text-muted); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.session-actions { display: none; gap: 4px; }
+.session-item:hover .session-actions { display: flex; }
+.session-empty { color: var(--text-muted); padding: 12px 14px; font-size: 12px; }
+
+.side-foot { padding: 8px 14px; border-top: 1px solid var(--border); }
+.enc-status { font-size: 10.5px; color: var(--text-muted); }
+
+/* ---------------- Main ---------------- */
+#main { display: flex; flex-direction: column; min-width: 0; }
+.tabbar {
+  display: flex; align-items: stretch; gap: 2px;
+  background: var(--bg-panel); border-bottom: 1px solid var(--border);
+  padding: 6px 6px 0; overflow-x: auto; min-height: 38px;
+}
+.tab {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 12px; border-radius: 8px 8px 0 0; cursor: pointer;
+  background: transparent; color: var(--text-muted);
+  border: 1px solid transparent; border-bottom: none; max-width: 220px;
+}
+.tab:hover { background: var(--bg-elevated); }
+.tab.active { background: var(--bg); color: var(--text); border-color: var(--border); }
+.tab .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-muted); flex: none; }
+.tab.active .status-dot.connected, .tab .status-dot.connected { background: var(--success); }
+.tab .status-dot.connecting { background: var(--accent); }
+.tab .status-dot.error { background: var(--danger); }
+.tab-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tab-close { color: var(--text-muted); border: none; background: none; cursor: pointer; font-size: 14px; line-height: 1; padding: 0 2px; }
+.tab-close:hover { color: var(--danger); }
+
+.panes { flex: 1; position: relative; background: var(--bg); min-height: 0; }
+.pane { position: absolute; inset: 0; padding: 6px; display: none; }
+.pane.active { display: block; }
+.pane .xterm { height: 100%; }
+
+/* Welcome */
+.welcome {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 12px; text-align: center;
+}
+.welcome img { width: 96px; height: 96px; border-radius: 22px; margin-bottom: 6px; }
+.welcome h1 { margin: 0; font-size: 22px; }
+.welcome-actions { display: flex; gap: 10px; margin-top: 6px; }
+.muted { color: var(--text-muted); }
+.small { font-size: 11.5px; }
+
+/* ---------------- SFTP drawer ---------------- */
+.sftp {
+  width: 320px; background: var(--bg-panel); border-left: 1px solid var(--border);
+  display: flex; flex-direction: column; min-width: 0;
+}
+.sftp.hidden { display: none; }
+.sftp-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+.sftp-title { font-weight: 600; }
+.sftp-tools { display: flex; gap: 4px; }
+.sftp-path { padding: 8px 12px; color: var(--text-muted); font-family: ui-monospace, monospace; font-size: 11px; white-space: nowrap; overflow-x: auto; border-bottom: 1px solid var(--border); }
+.sftp-list { flex: 1; overflow-y: auto; padding: 4px; }
+.sftp-row { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; cursor: pointer; }
+.sftp-row:hover { background: var(--bg-elevated); }
+.sftp-ic { width: 18px; text-align: center; flex: none; }
+.sftp-name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sftp-size { color: var(--text-muted); font-size: 11px; flex: none; }
+.sftp-row .row-actions { display: none; gap: 4px; }
+.sftp-row:hover .row-actions { display: flex; }
+.sftp-empty { color: var(--text-muted); padding: 14px; text-align: center; }
+
+/* ---------------- Buttons / inputs ---------------- */
+.btn {
+  background: var(--bg-elevated); color: var(--text);
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 7px 12px; cursor: pointer; font-size: 12.5px; font-weight: 600;
+}
+.btn:hover { border-color: var(--brand); }
+.btn-brand { background: var(--brand); border-color: var(--brand); color: #12091f; }
+.btn-brand:hover { background: var(--brand-hover); border-color: var(--brand-hover); }
+.icon-btn {
+  background: transparent; color: var(--text-muted); border: 1px solid transparent;
+  border-radius: 6px; width: 26px; height: 26px; cursor: pointer; font-size: 13px;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.icon-btn:hover { background: var(--bg-elevated); color: var(--text); }
+
+/* ---------------- Dialog ---------------- */
+.backdrop {
+  position: fixed; inset: 0; background: rgba(6,3,14,.6);
+  display: flex; align-items: center; justify-content: center; z-index: 50;
+}
+.backdrop.hidden { display: none; }
+.dialog {
+  width: 460px; max-width: calc(100vw - 40px);
+  background: var(--bg-panel); border: 1px solid var(--border); border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5); overflow: hidden;
+}
+.dialog-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--border); font-weight: 700; }
+.dialog-body { padding: 16px; display: flex; flex-direction: column; gap: 12px; max-height: 60vh; overflow-y: auto; }
+.dialog-body label { display: flex; flex-direction: column; gap: 5px; font-size: 12px; color: var(--text-muted); }
+.dialog-body input, .dialog-body select {
+  background: var(--bg); color: var(--text); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 10px; font-size: 13px; outline: none;
+}
+.dialog-body input:focus, .dialog-body select:focus { border-color: var(--brand); }
+.dialog-body .row { display: flex; gap: 10px; }
+.dialog-body .row .grow { flex: 1; }
+.dialog-body .port { width: 90px; }
+.dialog-foot { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-top: 1px solid var(--border); }
+.dialog-foot .spacer { flex: 1; }
+.chk { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
+.hidden { display: none; }
